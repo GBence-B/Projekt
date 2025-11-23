@@ -1,7 +1,7 @@
-                                                                                TrackMate projekt terv
+## TrackMate projekt terv
 
 
-Projektleírás
+## Projektleírás
 A TrackMate célja, hogy egy modern, könnyen használható, naptár-alapú követő alkalmazást biztosítson azok számára, akik szeretnék rendszerezni és nyomon követni mindennapi tevékenységeiket.
 A rendszer a felhasználók három fő területét támogatja:
 
@@ -23,11 +23,13 @@ A felület egy naptárszerű főnézetből indul ki, ahol minden napra kattintva
 A TrackMate így egy digitális self-monitoring eszközként működik, amely támogatja a felhasználók személyes fejlődését, önismeretét és pénzügyi tudatosságát.
 
 
-Frontend: Angular
-Backend: Firebase (Firestore, Authentication, Storage, Hosting)
-Adatbázis: Firebase Firestore
-Weboldal kinézetének megtekintése
-GitHub link: (ide kerül majd a repo linkje)
+## Frontend: Angular
+## Backend: Firebase (Firestore, Authentication, Storage, Hosting)
+## Adatbázis: Firebase Firestore
+## Weboldal kinézetének megtekintése
+
+
+## GitHub link: https://github.com/GBence-B/Projekt
 
 
 
@@ -37,7 +39,7 @@ GitHub link: (ide kerül majd a repo linkje)
 
 
 
-                                                                                    Funkciók
+## Funkciók
 Felhasználói funkciók (bejelentkezés után)
 Pénzügyi napló vezetése
 
@@ -88,7 +90,7 @@ Adatok valós idejű mentése Firebase-be
 
 
 
-                                                                                    Komponensek
+## Komponensek
 Bejelentkezés nélkül látható komponensek
 homeComponent
 Kezdőképernyő a TrackMate rövid bemutatásával.
@@ -154,6 +156,87 @@ settingsComponent
 Preferenciák, értesítések, fiók beállítások.
 
 
-A fejlesztők:
- Zsitnyák Ádám István (frontend)
-Gáspár Bence Bálint(backend)
+
+
+## ADATBÁZIS TERV(Firebase Firestore)
+1. users
+{
+  "id": "userId",
+  "name": "Felhasználó neve",
+  "email": "email@example.com",
+  "avatar": "storage_url",
+  "createdAt": "timestamp"
+}
+2. finance (users/{userId}/finance)
+{
+  "type": "expense | income",
+  "amount": 3000,
+  "category": "Food",
+  "note": "Ebéd",
+  "date": "2025-11-23"
+}
+3. routines (users/{userId}/routines)
+{
+  "title": "Reggeli futás",
+  "description": "20 perc kocogás",
+  "daysCompleted": ["2025-11-01", "2025-11-02"],
+  "createdAt": "timestamp"
+}
+4. mood (users/{userId}/mood)
+{
+  "mood": 4,
+  "note": "Egész jó nap",
+  "date": "2025-11-23"
+}
+CRUD műveletek Firebase-ben
+Felhasználók
+regisztráció: Firebase Authentication
+
+bejelentkezés / kijelentkezés
+
+profiladatok módosítása Firestore-ban
+
+profilkép feltöltése Storage-ba
+
+Pénzügyi modul
+Művelet	Leírás
+CREATE	Új kiadás/bevétel rögzítése
+READ	Napi/havi pénzügyek lekérése
+UPDATE	Összeg, kategória, leírás módosítása
+DELETE	Bejegyzés törlése
+Rutin modul
+Művelet	Leírás
+CREATE	Új rutin felvétele
+READ	Rutinok listázása
+UPDATE	Teljesített napok módosítása
+DELETE	Rutin törlése
+Hangulat modul
+Művelet	Leírás
+CREATE	Hangulat rögzítése egy adott napra
+READ	Napi/havi hangulat lekérése
+UPDATE	Bejegyzés módosítása
+DELETE	Bejegyzés törlése
+Firebase szolgáltatások
+Authentication – email+password alapú beléptetés
+
+Firestore – NoSQL dokumentum alapú adatbázis
+
+Storage – képek és profilképek tárolása
+
+Hosting – Angular app deployolása
+
+Végpontterv helyett (mivel Firebase REST nélkül működik)
+A Firestore műveletek AngularFire-rel történnek, nem külön API-n keresztül.
+
+Példa műveletek:
+
+collection("users").doc(userId).set({...})
+
+collection("users").doc(userId).collection("finance").add({...})
+
+collection("users").doc(userId).collection("routines").update({...})
+
+collection("users").doc(userId).collection("mood").delete()
+
+A Firebase ezért kiváltja a backend REST API-t, nincs Laravel-szerver, nincs MySQL.
+
